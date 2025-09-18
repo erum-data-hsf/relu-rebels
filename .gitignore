@@ -16,3 +16,5 @@ Thumbs.db
 .venv/
 env/
 venv/
+
+_build/

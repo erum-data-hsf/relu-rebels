@@ -6,7 +6,9 @@ root: intro
 chapters:
 - file: content
 - file: install
+- file: basic_example
 - file: hyperparameter_tuning_optuna
+- file: hands_on_exp
 # - file: markdown
 # - file: markdown-notebooks
 # - file: notebooks.ipynb
