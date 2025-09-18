@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'hyperparameter_tuning_optuna';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Installation of Optuna" href="install.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -122,8 +123,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -173,10 +172,10 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="content.html">Content in Jupyter Book</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation of Optuna</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hands_on_exp.html">Linear Regression with scikit-learn</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hyperparameter Tuning with Optuna</a></li>
 </ul>
 
     </div>
@@ -374,9 +373,6 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-optuna">🔹 1. Install Optuna</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-an-objective-function">🔹 2. Define an Objective Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-optimization">🔹 3. Run the Optimization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-deep-learning-pytorch">🔹 4. Example with Deep Learning (PyTorch)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-results">🔹 5. Visualize Results</a></li>
 </ul>
             </nav>
         </div>
@@ -435,88 +431,95 @@ and how to evaluate them.</p>
     <span class="k">return</span> <span class="n">acc</span>
 </pre></div>
 </div>
-</section>
-<hr class="docutils" />
-<section id="run-the-optimization">
-<h2>🔹 3. Run the Optimization<a class="headerlink" href="#run-the-optimization" title="Link to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;maximize&quot;</span><span class="p">)</span>  <span class="c1"># &quot;minimize&quot; for loss</span>
-<span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">objective</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<!-- 
+------------------------------------------------------------------------
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best trial:&quot;</span><span class="p">)</span>
-<span class="n">trial</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">best_trial</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Value:&quot;</span><span class="p">,</span> <span class="n">trial</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Params:&quot;</span><span class="p">,</span> <span class="n">trial</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="example-with-deep-learning-pytorch">
-<h2>🔹 4. Example with Deep Learning (PyTorch)<a class="headerlink" href="#example-with-deep-learning-pytorch" title="Link to this heading">#</a></h2>
-<p>You can use Optuna to tune learning rate, hidden layers, dropout, etc.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+## 🔹 3. Run the Optimization
 
-<span class="k">def</span><span class="w"> </span><span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
-    <span class="c1"># Suggest hyperparams</span>
-    <span class="n">lr</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_loguniform</span><span class="p">(</span><span class="s2">&quot;lr&quot;</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">)</span>
-    <span class="n">n_hidden</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s2">&quot;n_hidden&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
-    <span class="n">dropout</span> <span class="o">=</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s2">&quot;dropout&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-    
-    <span class="c1"># Define simple model</span>
-    <span class="k">class</span><span class="w"> </span><span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">Net</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_hidden</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_hidden</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+``` python
+study = optuna.create_study(direction="maximize")  # "minimize" for loss
+study.optimize(objective, n_trials=50)
 
-        <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    
-    <span class="n">model</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
-    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
-    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
-    
-    <span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
-                            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">))</span>
-    <span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+print("Best trial:")
+trial = study.best_trial
+print("  Value:", trial.value)
+print("  Params:", trial.params)
+```
 
-    <span class="c1"># Training loop</span>
-    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">xb</span><span class="p">,</span> <span class="n">yb</span> <span class="ow">in</span> <span class="n">loader</span><span class="p">:</span>
-            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-            <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">yb</span><span class="p">)</span>
-            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+------------------------------------------------------------------------
+
+## 🔹 4. Example with Deep Learning (PyTorch)
+
+You can use Optuna to tune learning rate, hidden layers, dropout, etc.
+
+``` python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
+
+def objective(trial):
+    # Suggest hyperparams
+    lr = trial.suggest_loguniform("lr", 1e-5, 1e-1)
+    n_hidden = trial.suggest_int("n_hidden", 16, 128)
+    dropout = trial.suggest_float("dropout", 0.1, 0.5)
     
-    <span class="c1"># Evaluate</span>
-    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
-        <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-        <span class="n">acc</span> <span class="o">=</span> <span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">acc</span>
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="visualize-results">
-<h2>🔹 5. Visualize Results<a class="headerlink" href="#visualize-results" title="Link to this heading">#</a></h2>
-<p>Optuna has built-in visualization:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optuna</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_optimization_history</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
-<span class="n">optuna</span><span class="o">.</span><span class="n">visualization</span><span class="o">.</span><span class="n">plot_param_importances</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
-</pre></div>
-</div>
-<hr class="docutils" />
-<p>✅ <strong>Key Tips:</strong> - Use <code class="docutils literal notranslate"><span class="pre">suggest_int</span></code>, <code class="docutils literal notranslate"><span class="pre">suggest_float</span></code>,
-<code class="docutils literal notranslate"><span class="pre">suggest_categorical</span></code>, <code class="docutils literal notranslate"><span class="pre">suggest_loguniform</span></code> depending on the parameter
+    # Define simple model
+    class Net(nn.Module):
+        def __init__(self):
+            super(Net, self).__init__()
+            self.fc1 = nn.Linear(4, n_hidden)
+            self.dropout = nn.Dropout(dropout)
+            self.fc2 = nn.Linear(n_hidden, 3)
+
+        def forward(self, x):
+            x = torch.relu(self.fc1(x))
+            x = self.dropout(x)
+            return self.fc2(x)
+    
+    model = Net()
+    optimizer = optim.Adam(model.parameters(), lr=lr)
+    criterion = nn.CrossEntropyLoss()
+    
+    dataset = TensorDataset(torch.tensor(X_train, dtype=torch.float32),
+                            torch.tensor(y_train, dtype=torch.long))
+    loader = DataLoader(dataset, batch_size=16, shuffle=True)
+
+    # Training loop
+    for epoch in range(10):
+        for xb, yb in loader:
+            optimizer.zero_grad()
+            preds = model(xb)
+            loss = criterion(preds, yb)
+            loss.backward()
+            optimizer.step()
+    
+    # Evaluate
+    with torch.no_grad():
+        preds = model(torch.tensor(X_test, dtype=torch.float32))
+        acc = (preds.argmax(dim=1).numpy() == y_test).mean()
+    return acc
+```
+
+------------------------------------------------------------------------
+
+## 🔹 5. Visualize Results
+
+Optuna has built-in visualization:
+
+``` python
+optuna.visualization.plot_optimization_history(study)
+optuna.visualization.plot_param_importances(study)
+```
+
+------------------------------------------------------------------------
+
+✅ **Key Tips:** - Use `suggest_int`, `suggest_float`,
+`suggest_categorical`, `suggest_loguniform` depending on the parameter
 type. - For deep learning, you can prune unpromising trials early using
-<code class="docutils literal notranslate"><span class="pre">optuna.integration.PyTorchLightningPruningCallback</span></code> or similar. - Set a
-proper number of trials (start small like <code class="docutils literal notranslate"><span class="pre">n_trials=20</span></code>, scale up
-later). - Combine with distributed/parallel execution for faster tuning.</p>
+`optuna.integration.PyTorchLightningPruningCallback` or similar. - Set a
+proper number of trials (start small like `n_trials=20`, scale up
+later). - Combine with distributed/parallel execution for faster tuning. -->
 </section>
 </section>
 
@@ -550,6 +553,15 @@ later). - Combine with distributed/parallel execution for faster tuning.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="install.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installation of Optuna</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -568,9 +580,6 @@ later). - Combine with distributed/parallel execution for faster tuning.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-optuna">🔹 1. Install Optuna</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-an-objective-function">🔹 2. Define an Objective Function</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-the-optimization">🔹 3. Run the Optimization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-deep-learning-pytorch">🔹 4. Example with Deep Learning (PyTorch)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-results">🔹 5. Visualize Results</a></li>
 </ul>
   </nav></div>
 

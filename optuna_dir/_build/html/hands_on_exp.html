@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Linear Regression with scikit-learn &#8212; optuna_dir</title>
+    <title>Hands_On &#8212; optuna_dir</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -60,7 +60,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'hands_on_exp';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Installation of Optuna" href="install.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -123,6 +122,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -172,10 +173,10 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="content.html">Content in Jupyter Book</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation of Optuna</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Regression with scikit-learn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hyperparameter_tuning_optuna.html">Hyperparameter Tuning with Optuna</a></li>
 </ul>
 
     </div>
@@ -359,7 +360,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Linear Regression with scikit-learn</h1>
+    <h1>Hands_On</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -373,36 +374,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="linear-regression-with-scikit-learn">
-<h1>Linear Regression with scikit-learn<a class="headerlink" href="#linear-regression-with-scikit-learn" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="hands-on">
+<h1>Hands_On<a class="headerlink" href="#hands-on" title="Link to this heading">#</a></h1>
 <p>This chapter teaches linear regression using <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> with a dataset from
 <a class="reference external" href="https://hsf-training.github.io/deep-learning-intro-for-hep/">Deep Learning from HEP</a>.</p>
-<p>Download the dataset from <a class="reference external" href="https://github.com/hsf-training/deep-learning-intro-for-hep/blob/main/deep-learning-intro-for-hep/data/penguins.csv">here</a>
-and place it in a <code class="docutils literal notranslate"><span class="pre">data/</span></code> folder.</p>
-<div class="admonition-objectives admonition">
-<p class="admonition-title">Objectives</p>
-<ul class="simple">
-<li><p>Have fun with penguins!</p></li>
-</ul>
-</div>
-<p>The dataset contains the basic measurements on 3 species of penguins!</p>
-<p><img alt="A penguin" src="https://hsf-training.github.io/deep-learning-intro-for-hep/_images/culmen_depth.png" /></p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Penguins can be very cute.</p>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -414,7 +389,7 @@ and place it in a <code class="docutils literal notranslate"><span class="pre">d
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">penguins_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/penguins.csv&quot;</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">penguins_df</span>
@@ -456,15 +431,6 @@ and place it in a <code class="docutils literal notranslate"><span class="pre">d
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="install.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Installation of Optuna</p>
-      </div>
-    </a>
 </div>
                 </footer>
               

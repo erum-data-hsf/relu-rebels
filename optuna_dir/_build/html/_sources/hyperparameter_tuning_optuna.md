@@ -50,7 +50,7 @@ def objective(trial):
     acc = accuracy_score(y_test, preds)
     return acc
 ```
-
+<!-- 
 ------------------------------------------------------------------------
 
 ## 🔹 3. Run the Optimization
@@ -138,4 +138,4 @@ optuna.visualization.plot_param_importances(study)
 type. - For deep learning, you can prune unpromising trials early using
 `optuna.integration.PyTorchLightningPruningCallback` or similar. - Set a
 proper number of trials (start small like `n_trials=20`, scale up
-later). - Combine with distributed/parallel execution for faster tuning.
+later). - Combine with distributed/parallel execution for faster tuning. -->
