@@ -17,4 +17,5 @@ Thumbs.db
 env/
 venv/
 
-_build/
+optuna_dir/_build/
+

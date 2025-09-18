@@ -28,13 +28,13 @@ jobs:
           python -m pip install -U pip
           pip install -r requirements.txt
       - name: Build Jupyter Book (treat warnings as errors)
-        working-directory: book_dir
+        working-directory: optuna_dir
         run: |
           jupyter-book build .
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: book_dir/_build/html
+          path: optuna_dir/_build/html
 
   deploy:
     if: github.ref == 'refs/heads/main'

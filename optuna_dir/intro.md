@@ -1,11 +1,30 @@
-# Welcome to your Jupyter Book
+# Welcome to Optuna
+Optuna is a great framework for hyperparameter optimization---it's
+efficient, flexible, and integrates well with deep learning libraries
+like PyTorch, TensorFlow, and Keras, as well as scikit-learn.
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+------------------------------------------------------------------------
 
-Check out the content pages bundled with this sample book to see more.
+## 🔹 What is Optuna?
+Optuna is an **automatic hyperparameter optimization framework**. It allows you to define a search space for hyperparameters and then uses efficient algorithms to find the best-performing set of parameters.
 
+Optuna works by asking two important questions during the optimization process:\
+1. **Search Space Definition:** 
+What range or type of hyperparameters should we try?\
+- Example: learning rate (float between 1e-5 and 1e-1), number of layers
+(integer 1--5), optimizer type (categorical: Adam, SGD, RMSprop).\
+2. **Optimization Target:** 
+What metric do we want to maximize or minimize?\
+- Example: accuracy (maximize), loss (minimize), F1 score (maximize).
+
+# Installation of Optuna 
+Optuna supports Python 3.8 or newer.
+
+We recommend to install Optuna via pip:
+
+```
+$ pip install optuna
+```
+# Table of contents
 ```{tableofcontents}
 ```

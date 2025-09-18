@@ -20,6 +20,7 @@ The **objective function** tells Optuna what hyperparameters to sample
 and how to evaluate them.
 
 Example with a simple scikit-learn classifier:
+Imports libraries:
 
 ``` python
 import optuna
@@ -28,10 +29,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-# Load data
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
+```
+
+Load data
+```
 X, y = load_iris(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
 
+Define the objective fuction which you want to minimize:
+
+```
 def objective(trial):
     # Define hyperparameter search space
     n_estimators = trial.suggest_int("n_estimators", 10, 200)
@@ -50,7 +62,7 @@ def objective(trial):
     acc = accuracy_score(y_test, preds)
     return acc
 ```
-<!-- 
+
 ------------------------------------------------------------------------
 
 ## 🔹 3. Run the Optimization
@@ -72,11 +84,6 @@ print("  Params:", trial.params)
 You can use Optuna to tune learning rate, hidden layers, dropout, etc.
 
 ``` python
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
-
 def objective(trial):
     # Suggest hyperparams
     lr = trial.suggest_loguniform("lr", 1e-5, 1e-1)
@@ -95,7 +102,8 @@ def objective(trial):
             x = torch.relu(self.fc1(x))
             x = self.dropout(x)
             return self.fc2(x)
-    
+```
+```    
     model = Net()
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = nn.CrossEntropyLoss()
@@ -103,7 +111,9 @@ def objective(trial):
     dataset = TensorDataset(torch.tensor(X_train, dtype=torch.float32),
                             torch.tensor(y_train, dtype=torch.long))
     loader = DataLoader(dataset, batch_size=16, shuffle=True)
+```
 
+```
     # Training loop
     for epoch in range(10):
         for xb, yb in loader:
@@ -138,4 +148,4 @@ optuna.visualization.plot_param_importances(study)
 type. - For deep learning, you can prune unpromising trials early using
 `optuna.integration.PyTorchLightningPruningCallback` or similar. - Set a
 proper number of trials (start small like `n_trials=20`, scale up
-later). - Combine with distributed/parallel execution for faster tuning. -->
+later). - Combine with distributed/parallel execution for faster tuning.
