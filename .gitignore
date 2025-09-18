@@ -1,0 +1,18 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+
+# Ignore build artifacts from Sphinx / Jupyter Book
+optuna_dir/_build/
+
+# Ignore common temporary files
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignore virtual environments
+.venv/
+env/
+venv/
