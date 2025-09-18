@@ -1,20 +1,18 @@
-# Ignore all .txt files
-*.txt
+# Ignore Python cache
+__pycache__/
+*.py[cod]
 
-# Ignore all .pyc files (Python cache)
-*.pyc
+# Ignore build artifacts from Sphinx / Jupyter Book
+optuna_dir/_build/
 
-# Ignore common system files
-
-# macOS
+# Ignore common temporary files
+*.log
+*.tmp
+*.swp
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
 Thumbs.db
-Desktop.ini
 
-# Linux
-.Trash-*
-
+# Ignore virtual environments
+.venv/
+env/
+venv/
