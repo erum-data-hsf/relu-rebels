@@ -6,6 +6,7 @@ root: intro
 chapters:
 - file: content
 - file: install
+- file: basic_example
 - file: hands_on_exp
 # - file: markdown
 # - file: markdown-notebooks
